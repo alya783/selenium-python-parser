@@ -3,7 +3,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
+import json
 
 @dataclass
 class Caterory:
@@ -45,9 +46,10 @@ def print_categoties(pages, driver):
    for page in pages:
       data = extract_category(page.url, driver)  
       s_arr = page.name.split('-', 1)
-      print(Caterory(s_arr[0].strip(), s_arr[1].strip()))
+      nav_category = Caterory(s_arr[0].strip(), s_arr[1].strip())
+      print(json.dumps(asdict(nav_category)))
       for category in data:
-         print(category)
+         print(json.dumps(asdict(category)))
       
 def extract_category(link, driver):
    driver.get(link)
